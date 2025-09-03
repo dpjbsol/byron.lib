@@ -17,12 +17,11 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
     "@dpjbsol:registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byron-test-packages/byron-component-lib.git"
+    "url": "git+https://github.com/dpjbsol/byron.lib.git"
   },
   "scripts": {
     "dev": "vite",
