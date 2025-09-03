@@ -1,2 +1,2 @@
-// Deixe este arquivo vazio por enquanto, ou adicione seus componentes aqui.
-export {};
+export { default as Button } from './Button';
+export * from './Button';
