@@ -19,7 +19,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "repository": "github:dpjbsol/byron.lib",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpjbsol/byron.lib.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
