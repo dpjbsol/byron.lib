@@ -7,29 +7,33 @@ import { resolve } from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(), 
+    react(),
     tailwindcss(),
     dts({
       tsconfigPath: "./tsconfig.build.json",
       outDir: "dist",
-      insertTypesEntry: true
-    })
+      insertTypesEntry: true,
+    }),
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/lib.ts'),
-      name: 'ByronLib',
-      formats: ['es', 'umd'],
-      fileName: (format) => `byron.lib.${format}.js`
+      entry: resolve(__dirname, "src/lib.ts"),
+      name: "ByronLib",
+      formats: ["es", "umd"],
+      fileName: (format) => `byron.lib.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM'
-        }
-      }
-    }
-  }
-})
+          react: "React",
+          "react-dom": "ReactDOM",
+          "react/jsx-runtime": "react/jsx-runtime",
+        },
+      },
+    },
+    cssCodeSplit: false,
+    sourcemap: true,
+    emptyOutDir: true,
+  },
+});
