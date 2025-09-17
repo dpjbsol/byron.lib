@@ -26,7 +26,7 @@ const button = tv({
   },
 });
 
-interface ButtonProps
+export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof button> {
   children: React.ReactNode;
