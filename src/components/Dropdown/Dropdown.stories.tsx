@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Dropdown, type DropdownProps } from ".";
 
 const meta: Meta<DropdownProps> = {
-  title: "Example/Dropdown",
+  title: "Components/Dropdown",
   component: Dropdown,
   parameters: {
     layout: "centered",
@@ -28,6 +28,13 @@ const meta: Meta<DropdownProps> = {
       description: "Alinhamento do conteúdo dos itens dentro do menu",
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ minHeight: "50vh" }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
@@ -40,15 +47,6 @@ const exampleItems = [
 ];
 
 export const Default: Story = {
-  args: {
-    label: "Menu",
-    items: exampleItems,
-    position: "right",
-    alignment: "right",
-  },
-};
-
-export const LeftVariant: Story = {
   args: {
     label: "Menu",
     items: exampleItems,

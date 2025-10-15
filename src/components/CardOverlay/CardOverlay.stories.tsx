@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { CardOverlay, type CardOverlayProps } from ".";
 
 const meta: Meta<CardOverlayProps> = {
-  title: "Example/CardOverlay",
+  title: "Components/CardOverlay",
   component: CardOverlay,
   parameters: {
     layout: "centered",
