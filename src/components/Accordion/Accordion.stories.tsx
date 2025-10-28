@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Accordion, type AccordionItem } from "./index";
-import { FileText, Zap, Star, Heart, Cpu, Code, Database } from "lucide-react";
+import { FileText, Zap, Star, Heart, Cpu, Code, Database, Globe, Sparkles, Rocket } from "lucide-react";
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -101,6 +101,60 @@ const devToolsData: AccordionItem[] = [
   },
 ];
 
+const frontendData: AccordionItem[] = [
+  {
+    title: "React Server Components",
+    body: "RSCs renderizam no servidor sem enviar JavaScript ao cliente. Permitem acesso direto a banco de dados, filesystem e APIs privadas. Componentes 'use client' ainda existem para interatividade. Next.js App Router é a implementação mais popular.",
+    icon: <Code size={18} />,
+  },
+  {
+    title: "Signals: O novo paradigma de reatividade",
+    body: "Signals são primitivos reativos fine-grained que atualizam apenas o que mudou, sem Virtual DOM. Solid.js pioneirou, agora Vue 3.4, Preact e Angular adotaram. Melhor performance que useState/setState pois evita re-renders desnecessários. Qwik leva signals ao extremo com resumability.",
+    icon: <Sparkles size={18} />,
+  },
+  {
+    title: "Streaming SSR e Progressive Hydration",
+    body: "Em vez de esperar toda a página renderizar, streaming SSR envia HTML em chunks. Progressive hydration ativa JavaScript apenas quando o usuário interage. Reduz Time to Interactive drasticamente. React 18 Suspense e Next.js 13+ implementam nativamente.",
+    icon: <Rocket size={18} />,
+  },
+];
+
+const performanceData: AccordionItem[] = [
+  {
+    title: "Core Web Vitals e como otimizar",
+    body: "LCP (Largest Contentful Paint) deve ser < 2.5s, FID (First Input Delay) < 100ms, CLS (Cumulative Layout Shift) < 0.1. Use lazy loading para imagens, code splitting para JS, preconnect para fonts. Lighthouse e PageSpeed Insights medem automaticamente.",
+    icon: <Zap size={18} />,
+  },
+  {
+    title: "HTTP/3 e QUIC Protocol",
+    body: "HTTP/3 usa QUIC sobre UDP em vez de TCP, eliminando head-of-line blocking. Conexões sobrevivem mudanças de rede (Wi-Fi para 4G). 0-RTT permite requests instantâneos em reconexões. Cloudflare, Google e Facebook já usam extensivamente. 25% da web já roda HTTP/3.",
+    icon: <Globe size={18} />,
+  },
+  {
+    title: "Edge Functions e Distributed Computing",
+    body: "Edge functions rodam em CDN nodes próximos ao usuário, não em um servidor central. Vercel Edge, Cloudflare Workers e Deno Deploy executam código em 250+ cidades globalmente. Latência < 50ms para qualquer usuário. Ideal para A/B tests, personalização e auth.",
+    icon: <Database size={18} />,
+  },
+];
+
+const backendData: AccordionItem[] = [
+  {
+    title: "tRPC: Type-safe APIs sem GraphQL",
+    body: "tRPC permite criar APIs fullstack TypeScript onde frontend e backend compartilham tipos automaticamente. Zero runtime overhead, autocomplete perfeito, refactoring seguro. Elimina necessidade de schemas GraphQL ou validação manual. T3 Stack popularizou para Next.js.",
+    icon: <Code size={18} />,
+  },
+  {
+    title: "Serverless vs Containers: quando usar cada um",
+    body: "Serverless (Lambda, Cloud Functions) é ideal para cargas variáveis, paga por execução, cold start de ~100ms. Containers (ECS, Kubernetes) melhor para workloads constantes, controle total, sem cold starts. Hybrid approach: APIs em containers, workers em serverless.",
+    icon: <Rocket size={18} />,
+  },
+  {
+    title: "Prisma e Type-safe Database Access",
+    body: "Prisma gera TypeScript client baseado no schema do banco. Autocomplete para queries, migrations automáticas, suporta PostgreSQL, MySQL, MongoDB. Alternativas: Drizzle (mais leve), Kysely (query builder minimalista). ORMs modernos focam em DX sem sacrificar performance.",
+    icon: <Database size={18} />,
+  },
+];
+
 export const Default: Story = {
   args: {
     data: webTechData,
@@ -110,7 +164,7 @@ export const Default: Story = {
 
 export const Pill: Story = {
   args: {
-    data: webTechData,
+    data: frontendData,
     variant: "pill",
     highlightColor: "purple-500",
   },
@@ -125,7 +179,7 @@ export const WithIcons: Story = {
 
 export const Minimal: Story = {
   args: {
-    data: webTechData,
+    data: performanceData,
     variant: "default",
     minimal: true,
   },
@@ -133,7 +187,7 @@ export const Minimal: Story = {
 
 export const PlusMinusIcons: Story = {
   args: {
-    data: webTechData,
+    data: backendData,
     variant: "default",
     iconsPreset: "plusminus",
   },
@@ -150,7 +204,7 @@ export const MultipleOpen: Story = {
 
 export const StartOpen: Story = {
   args: {
-    data: webTechData,
+    data: performanceData,
     variant: "pill",
     defaultOpen: true,
     highlightColor: "blue-500",
@@ -161,22 +215,22 @@ export const CustomIcons: Story = {
   args: {
     data: [
       {
-        title: "React Server Components",
-        body: "RSCs renderizam no servidor sem enviar JavaScript ao cliente. Permitem acesso direto a banco de dados, filesystem e APIs privadas. Componentes 'use client' ainda existem para interatividade. Next.js App Router é a implementação mais popular.",
-        icon: <Code size={18} />,
+        title: "Astro: O framework para sites estáticos do futuro",
+        body: "Astro gera sites 100% estáticos por padrão (zero JS!). Islands Architecture hidrata apenas componentes interativos. Suporta React, Vue, Svelte no mesmo projeto. Ideal para blogs, docs e landing pages. Build times 10x mais rápidos que Gatsby.",
+        icon: <Rocket size={18} />,
         actionOpenIcon: <Star size={16} fill="currentColor" />,
         actionClosedIcon: <Star size={16} />,
       },
       {
-        title: "TanStack Query (React Query)",
-        body: "Biblioteca de data fetching que gerencia cache, revalidação e estados de loading/error automaticamente. Suporta infinite scroll, optimistic updates e prefetching. Funciona com REST, GraphQL e qualquer fonte de dados assíncrona.",
-        icon: <Database size={18} />,
+        title: "Zod e Type-safe Validation",
+        body: "Zod valida dados em runtime e gera tipos TypeScript automaticamente. Perfeito para validar forms, APIs e variáveis de ambiente. Integra com React Hook Form e tRPC. Alternativas: Yup (mais antigo), Valibot (mais leve, 1KB). Runtime safety é essencial.",
+        icon: <Code size={18} />,
         actionOpenIcon: <Heart size={16} fill="currentColor" />,
         actionClosedIcon: <Heart size={16} />,
       },
       {
-        title: "Vite vs Webpack",
-        body: "Vite usa ESM nativo durante dev (sem bundling) para HMR instantâneo. Produção usa Rollup. Webpack continua poderoso para configurações complexas mas setup é trabalhoso. Vite tem melhor DX e é padrão em Vue, Svelte e projetos modernos.",
+        title: "Hono: Framework web ultrarrápido para Edge",
+        body: "Hono é express-like mas 10x mais rápido, roda em qualquer runtime (Node, Bun, Deno, Cloudflare Workers). Middleware system poderoso, roteamento ultra-otimizado, TypeScript first. Menor que 20KB. Ideal para APIs em edge functions.",
         icon: <Zap size={18} />,
       },
     ],
@@ -225,7 +279,7 @@ export const Comparison: Story = {
         <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
           Pill Variant
         </h3>
-        <Accordion data={aiTechData} variant="pill" highlightColor="purple-500" />
+        <Accordion data={frontendData} variant="pill" highlightColor="purple-500" />
       </div>
     </div>
   ),
@@ -233,7 +287,7 @@ export const Comparison: Story = {
 
 export const Playground: Story = {
   args: {
-    data: aiTechData,
+    data: performanceData,
     variant: "pill",
     minimal: false,
     exclusive: true,

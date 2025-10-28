@@ -116,7 +116,8 @@ export function Accordion({
                   className={clsx(
                     "rounded-2xl transition-colors shadow-sm",
                     isOpen
-                      ? "ring-1 ring-[rgb(var(--accordion-hl)/0.2)] bg-[rgb(var(--accordion-hl)/0.08)] shadow"
+                                            ? "ring-1 ring-[rgb(var(--accordion-hl)/0.2)] bg-[rgb(var(--accordion-hl)/0.08)] shadow"
+
                       : "bg-zinc-100 dark:bg-zinc-800"
                   )}
                 >
@@ -127,6 +128,7 @@ export function Accordion({
                     leftIcon={item.icon}
                     action={action}
                     variant="pill"
+                    highlighted={isOpen}
                   >
                     {item.title}
                   </Header>
@@ -153,6 +155,7 @@ export function Accordion({
                 leftIcon={item.icon}
                 action={action}
                 variant="default"
+                highlighted={false}
               >
                 {item.title}
               </Header>
@@ -174,11 +177,12 @@ type HeaderProps = {
   leftIcon?: React.ReactNode;
   action: React.ReactElement;
   variant: "default" | "pill";
+  highlighted: boolean;
   children: React.ReactNode;
 };
 
-function Header({ minimal, isOpen, onToggle, leftIcon, action, variant, children }: HeaderProps) {
-  const baseClasses = "flex w-full items-center text-left focus:outline-none transition-colors";
+function Header({ minimal, isOpen, onToggle, leftIcon, action, variant, highlighted, children }: HeaderProps) {
+  const baseClasses = "flex w-full items-center text-left focus:outline-none transition-colors cursor-pointer";
   const spacingClasses = minimal ? "gap-2 px-4 py-2.5" : "gap-3 px-4 py-3";
   const focusClasses = "focus-visible:ring-2 focus-visible:ring-[rgb(var(--accordion-hl))] focus-visible:ring-offset-1";
   const roundingClasses = variant === "default" 
@@ -192,13 +196,29 @@ function Header({ minimal, isOpen, onToggle, leftIcon, action, variant, children
       aria-expanded={isOpen}
       className={clsx(baseClasses, spacingClasses, focusClasses, roundingClasses)}
     >
-      {leftIcon && <span className="text-zinc-500 dark:text-zinc-400 flex-shrink-0">{leftIcon}</span>}
-      <span className="flex-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{children}</span>
+      {leftIcon && (
+        <span className={clsx(
+          "flex-shrink-0",
+          highlighted ? "text-[rgb(var(--accordion-hl))]" : "text-zinc-500 dark:text-zinc-400"
+        )}>
+          {leftIcon}
+        </span>
+      )}
+      <span className={clsx(
+        "flex-1 text-sm font-medium",
+        highlighted 
+          ? "text-[rgb(var(--accordion-hl))] dark:text-[rgb(var(--accordion-hl))]" 
+          : "text-zinc-900 dark:text-zinc-100"
+      )}>
+        {children}
+      </span>
       {!minimal && (
         <span
           className={clsx(
             "inline-flex h-7 w-7 items-center justify-center rounded-full flex-shrink-0",
-            isOpen
+            highlighted
+              ? "text-[rgb(var(--accordion-hl))]"
+              : isOpen
               ? "text-zinc-700 dark:text-zinc-200"
               : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
           )}
