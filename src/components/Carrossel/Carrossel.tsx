@@ -1,23 +1,93 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
+export interface CarouselItem {
+  id?: string | number
+  src: string
+  alt: string
+  caption?: string
+}
+
 export interface CarouselProps {
   // Tema: 'light' ou 'dark'. Padrão 'light'
   theme?: 'light' | 'dark'
+  // items tipados (recomendado para imagens / JSON)
+  items?: CarouselItem[]
+  // alternativa via composição: qualquer node React
+  children?: React.ReactNode | React.ReactNode[]
 }
 
-const Carrossel: React.FC<CarouselProps> = ({ theme = 'light' }) => {
+const Carrossel: React.FC<CarouselProps> = ({ theme = 'light', items, children }) => {
   // índice do slide atualmente visível
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Items de exemplo: 4 cards com números
-  const items = useMemo(() => [1, 2, 3, 4], [])
-  const total = items.length
+  // Normaliza fonte de slides:
+  // - se items fornecido -> transforma em nodes de imagem
+  // - senão children -> aceita qualquer node React
+  // - senão fallback com cards numéricos anteriores
+  const slides = useMemo(() => {
+    if (items && items.length > 0) {
+      return items.map((it, idx) => (
+        <div
+          key={it.id ?? idx}
+          className={`flex-none w-full h-[360px] p-6 flex items-center justify-center ${
+            theme === 'dark' ? 'bg-[#141414] text-white' : ''
+          }`}
+        >
+          <div className={`w-full h-full rounded-2xl overflow-hidden shadow-md ${theme === 'dark' ? 'bg-[#141414]' : 'bg-white'}`}>
+            <img
+              src={it.src}
+              alt={it.alt}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          {it.caption && (
+            <p className={`mt-2 text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{it.caption}</p>
+          )}
+        </div>
+      ))
+    }
+
+    const childrenArr = React.Children.toArray(children)
+    if (childrenArr.length > 0) {
+      return childrenArr.map((child, idx) => (
+        <div
+          key={(child as any)?.key ?? idx}
+          className={`flex-none w-full h-[360px] p-6 flex items-center justify-center ${
+            theme === 'dark' ? 'bg-[#141414] text-white' : ''
+          }`}
+        >
+          {child}
+        </div>
+      ))
+    }
+
+    // fallback original: cards 1..4
+    return [1, 2, 3, 4].map((n) => (
+      <div
+        key={n}
+        className={`flex-none w-full h-[360px] ${theme === 'light' ? 'bg-[#707070]' : 'bg-[#141414]'} text-white p-6 flex items-center justify-center`}
+      >
+        <div className="w-full h-full rounded-2xl flex items-center justify-center">
+          <span className="text-4xl font-bold select-none">{n}</span>
+        </div>
+      </div>
+    ))
+  }, [items, children, theme])
+
+  const total = slides.length
 
   // Avança para o próximo index com loop infinito
-  const handleNext = () => setCurrentIndex((i: number) => (i + 1) % total)
+  const handleNext = () => {
+    if (total === 0) return
+    setCurrentIndex((i: number) => (i + 1) % total)
+  }
 
   // Volta para o anterior com loop infinito
-  const handlePrev = () => setCurrentIndex((i: number) => (i - 1 + total) % total)
+  const handlePrev = () => {
+    if (total === 0) return
+    setCurrentIndex((i: number) => (i - 1 + total) % total)
+  }
 
   // Ativa navegação por teclado (SetaEsquerda / SetaDireita)
   useEffect(() => {
@@ -30,9 +100,7 @@ const Carrossel: React.FC<CarouselProps> = ({ theme = 'light' }) => {
     return () => window.removeEventListener('keydown', onKey)
   }, [total])
 
-  const bgCard = theme === 'light' ? 'bg-[#707070]' : 'bg-[#141414]'
   const btnBg = theme === 'light' ? 'bg-[#707070]' : 'bg-[#141414]'
-  const textColor = theme === 'light' ? 'text-white' : 'text-white'
 
   return (
     <div
@@ -48,18 +116,9 @@ const Carrossel: React.FC<CarouselProps> = ({ theme = 'light' }) => {
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            aria-live="polite"
           >
-            {items.map((n: number) => (
-              <div
-                key={n}
-                className={`flex-none w-full h-[360px] ${bgCard} ${textColor} p-6 flex items-center justify-center`}
-              >
-                {/* Card interno com bordas arredondadas (dimensão principal 340x360) */}
-                <div className="w-full h-full rounded-2xl flex items-center justify-center">
-                  <span className="text-4xl font-bold select-none">{n}</span>
-                </div>
-              </div>
-            ))}
+            {slides}
           </div>
         </div>
 
@@ -87,7 +146,7 @@ const Carrossel: React.FC<CarouselProps> = ({ theme = 'light' }) => {
       </div>
 
       <div className="mt-4 flex justify-center gap-2">
-        {items.map((_, idx) => (
+        {slides.map((_, idx) => (
           <button
             key={idx}
             aria-label={`Ir para o slide ${idx + 1}`}
