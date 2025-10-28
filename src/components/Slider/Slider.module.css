@@ -1,0 +1,89 @@
+/* src/components/Slider/Slider.module.css (VERSÃO SEM CONTORNO) */
+
+.sliderContainer {
+  /* --- TAMANHOS (Valores padrão) --- */
+  --track-height: 4px; /* Altura da trilha */
+  --thumb-size: 16px; /* Diâmetro do círculo */
+
+  /* =======================================
+   * === MODO CLARO (LIGHT MODE) PADRÃO ===
+   * =======================================
+   * (Barra preta, bolinha preta sem contorno)
+  */
+  --track-color-active: #141414;   /* Ativa (Preta) */
+  --track-color-inactive: #E0E0E0; /* Inativa (Cinza Claro) */
+  --thumb-color: #141414;          /* Fundo do Círculo (Preto) */
+
+  position: relative;
+  width: 100%;
+}
+
+.sliderInput {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--thumb-size);
+  background: transparent;
+  cursor: pointer;
+}
+.sliderInput:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- 1. A TRILHA (TRACK) --- */
+.sliderInput::-webkit-slider-runnable-track {
+  width: 100%;
+  height: var(--track-height);
+  border-radius: var(--track-height);
+  background: linear-gradient(
+    to right,
+    var(--track-color-active) var(--slider-progress-percent),
+    var(--track-color-inactive) var(--slider-progress-percent)
+  );
+}
+.sliderInput::-moz-range-track {
+  width: 100%;
+  height: var(--track-height);
+  border-radius: var(--track-height);
+  background: linear-gradient(
+    to right,
+    var(--track-color-active) var(--slider-progress-percent),
+    var(--track-color-inactive) var(--slider-progress-percent)
+  );
+}
+
+/* --- 2. O POLEGAR (THUMB / CÍRCULO) --- */
+.sliderInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  border-radius: 50%;
+  background: var(--thumb-color); /* Fundo da bolinha */
+  
+  /* --- SUA MUDANÇA: SEM CONTORNO --- */
+  border: none; 
+  
+  margin-top: calc((var(--thumb-size) - var(--track-height)) / -2); /* Centraliza */
+}
+.sliderInput::-moz-range-thumb {
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  border-radius: 50%;
+  background: var(--thumb-color); /* Fundo da bolinha */
+  
+  /* --- SUA MUDANÇA: SEM CONTORNO --- */
+  border: none;
+}
+
+/* * ========================================================
+ * == VARIANTE DARK MODE (.dark) ==
+ * ========================================================
+ * (Barra branca, bolinha branca sem contorno)
+ */
+.dark {
+  --track-color-active: #FFFFFF;   /* Ativa (Branca) */
+  --track-color-inactive: #141414; /* Inativa (Preta) */
+  --thumb-color: #FFFFFF;          /* Fundo do Círculo (Branco) */
+}
