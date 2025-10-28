@@ -219,7 +219,7 @@ function Header({ minimal, isOpen, onToggle, leftIcon, action, variant, highligh
             highlighted
               ? "text-[rgb(var(--accordion-hl))]"
               : isOpen
-              ? "text-zinc-700 dark:text-zinc-200"
+              ? "text-zinc-700 dark:text-zinc-700"
               : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
           )}
         >
@@ -238,17 +238,22 @@ type ContentProps = {
 
 function Content({ isOpen, variant, children }: ContentProps) {
   if (!isOpen) return null;
+
+  const darkTextColor =
+    variant === "pill" ? "dark:text-zinc-700" : "dark:text-zinc-200";
+
   return (
     <div
       className={clsx(
-        "px-4 pb-4 text-sm text-zinc-700 dark:text-zinc-800 leading-relaxed",
-        variant === "pill" && "rounded-b-2xl",
-        variant === "default" && ""
+        "px-4 pb-4 text-sm text-zinc-700 leading-relaxed",
+        darkTextColor,
+        variant === "pill" && "rounded-b-2xl"
       )}
     >
       {children}
     </div>
   );
 }
+
 
 export default Accordion;
