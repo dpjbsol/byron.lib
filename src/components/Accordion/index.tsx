@@ -241,7 +241,7 @@ function Content({ isOpen, variant, children }: ContentProps) {
   return (
     <div
       className={clsx(
-        "px-4 pb-4 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed",
+        "px-4 pb-4 text-sm text-zinc-700 dark:text-zinc-800 leading-relaxed",
         variant === "pill" && "rounded-b-2xl",
         variant === "default" && ""
       )}
