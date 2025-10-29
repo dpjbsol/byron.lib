@@ -52,7 +52,7 @@ export const Primary: Story = {
     ),
     size: "md",
     shadow: "md",
-    hoverEffect: "scale",
+    hoverEffect: "none",
     overlayVariant: "blue",
   },
 };
@@ -68,7 +68,7 @@ export const AllVariants: Story = {
           title="Montanha Azul"
           description="Overlay azul padrão"
           overlayVariant="blue"
-          hoverEffect="scale"
+          hoverEffect="lift"
           overlayContent={<span>Ver mais</span>}
         />
       </div>
@@ -94,7 +94,7 @@ export const AllVariants: Story = {
           title="Montanha Clara"
           description="Overlay claro"
           overlayVariant="light"
-          hoverEffect="scale"
+          hoverEffect="lift"
           overlayContent={<span>Ver mais</span>}
         />
       </div>
