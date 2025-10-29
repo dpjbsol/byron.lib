@@ -1,10 +1,6 @@
-// src/components/Slider/Slider.tsx
 import { useState, useMemo } from 'react';
 import styles from './Slider.module.css';
 
-// ==========================================================
-// AQUI ESTÁ A DEFINIÇÃO COMPLETA QUE ESTAVA FALTANDO
-// ==========================================================
 export interface SliderProps {
   /**
    * O valor inicial (não controlado) do slider.
@@ -44,9 +40,7 @@ export interface SliderProps {
    */
   mode?: 'light' | 'dark';
 }
-// ==========================================================
-// (FIM DA DEFINIÇÃO)
-// ==========================================================
+
 
 export const Slider = ({
   min = 0,
@@ -56,12 +50,11 @@ export const Slider = ({
   value,
   disabled = false,
   onChange,
-  mode = 'light', // A nova prop de tema
+  mode = 'light', 
 }: SliderProps) => {
-  // Gerencia o estado interno se 'value' não for controlado
   const [internalValue, setInternalValue] = useState(defaultValue);
   
-  // Decide se usa o valor externo (controlado) ou interno
+
   const currentValue = value !== undefined ? value : internalValue;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,15 +65,13 @@ export const Slider = ({
     }
   };
 
-  // Calcula a porcentagem do progresso
   const progressPercent = useMemo(() => {
     return ((currentValue - min) / (max - min)) * 100;
   }, [currentValue, min, max]);
 
-  // Junta as classes (base + variante de tema)
   const containerClasses = [
     styles.sliderContainer,
-    mode === 'dark' ? styles.dark : '' // Adiciona .dark se mode="dark"
+    mode === 'dark' ? styles.dark : ''
   ].join(' ');
 
   return (
