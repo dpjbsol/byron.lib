@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 
 const card = tv({
   slots: {
-    base: "relative rounded-xl overflow-hidden group transition-transform duration-300",
+    base: "relative rounded-xl overflow-hidden group transition-transform duration-300 gap-2",
     image: "w-full object-cover",
-    content: "p-2",
+    content: "",
     overlay:
       "absolute inset-0 rounded-xl flex items-center justify-center text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-500",
   },
@@ -24,7 +24,6 @@ const card = tv({
     },
     hoverEffect: {
       none: { base: "" },
-      scale: { base: "hover:scale-[1.02]" },
       lift: { base: "hover:-translate-y-1" },
     },
     overlayVariant: {
@@ -36,7 +35,7 @@ const card = tv({
   defaultVariants: {
     size: "md",
     shadow: "md",
-    hoverEffect: "scale",
+    hoverEffect: "none",
     overlayVariant: "blue",
   },
 });
@@ -64,7 +63,7 @@ export function CardOverlay({
 
   return (
     <div className={base()}>
-      <img  src={imgSrc} alt={altText} className={image()} />
+      <img  src={imgSrc} alt={altText} className={`image() rounded-md`} />
 
       <div className={content()}>
         <h1 className="text-lg font-bold">{title}</h1>
