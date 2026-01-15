@@ -100,7 +100,9 @@ export default function Modal({
       />
       <div
         className={container({
-          className: isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none",
+          className: isOpen
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none",
         })}
       >
         <div className={content()}>
